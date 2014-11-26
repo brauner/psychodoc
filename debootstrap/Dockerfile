@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM brauner/debian:stable
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
@@ -31,6 +31,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    zip \
    unzip \
 # 3D
+   i965-va-driver \
    libegl1-mesa \
    libgl1-mesa-dri \
    libgl1-mesa-glx \
@@ -68,20 +69,25 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && usermod -s /bin/bash docker \
 && usermod -a -G 100 docker \
 && usermod -a -G sudo docker \
-# set correct GID should your distro differ
-# && groupmod -g 91 video \
+&& groupmod -g 91 video \
 && usermod -a -G video docker \
-# set correct GID should your distro differ
-# && groupmod -g 92 audio \
+&& groupmod -g 92 audio \
 && usermod -a -G audio docker \
+&& printf '\nen_IE.UTF-8 UTF-8\n' >> /etc/locale.gen \
+&& locale-gen \
+&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /root/.inputrc \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
+ENV LANG en_IE.UTF-8
 ENV HOME /home/docker
 WORKDIR /home/docker
 USER docker
 
 RUN cd /home/docker \
+&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
 && printf '\nexport PYTHONPATH=/home/docker/psychopy\n' >> /home/docker/.bashrc \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /home/docker/.inputrc \
 && cd /home/docker \
 && git clone https://github.com/psychopy/psychopy.git
