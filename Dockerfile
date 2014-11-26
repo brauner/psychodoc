@@ -1,4 +1,4 @@
-FROM brauner/debian:testing
+FROM brauner/debian:stable
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
@@ -9,10 +9,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && printf '\npath-exclude=/usr/share/man/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf '\npath-include=/usr/share/man/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf '\npath-include=/usr/share/man/man[1-9]/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf 'deb http://neurodebian.g-node.org data main contrib non-free' > /etc/apt/sources.list.d/neurodebian.sources.list \
-&& printf 'deb-src http://neurodebian.g-node.org data main contrib non-free' >> /etc/apt/sources.list.d/neurodebian.sources.list \
-&& printf 'deb http://neurodebian.g-node.org wheezy main contrib non-free' >> /etc/apt/sources.list.d/neurodebian.sources.list \
-&& printf 'deb-src http://neurodebian.g-node.org wheezy main contrib non-free' >> /etc/apt/sources.list.d/neurodebian.sources.list \
+&& printf '\ndeb http://neurodebian.g-node.org data main contrib non-free' > /etc/apt/sources.list.d/neurodebian.sources.list \
+&& printf '\ndeb-src http://neurodebian.g-node.org data main contrib non-free' >> /etc/apt/sources.list.d/neurodebian.sources.list \
+&& printf '\ndeb http://neurodebian.g-node.org wheezy main contrib non-free' >> /etc/apt/sources.list.d/neurodebian.sources.list \
+&& printf '\ndeb-src http://neurodebian.g-node.org wheezy main contrib non-free\n' >> /etc/apt/sources.list.d/neurodebian.sources.list \
 && apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 2649A5A9 \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
