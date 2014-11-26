@@ -85,7 +85,7 @@ ENV HOME /home/docker
 WORKDIR /home/docker
 USER docker
 
-RUN cd / \
+RUN cd /home/docker \
 && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > /home/docker/.inputrc \
 && cd /home/docker \
