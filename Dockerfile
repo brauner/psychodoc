@@ -75,8 +75,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && usermod -a -G audio docker \
 && printf '\nen_IE.UTF-8 UTF-8\n' >> /etc/locale.gen \
 && locale-gen \
+&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /root/.inputrc \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/* \
+&& rm -rf /var/lib/apt/lists/*
 
 ENV LANG en_IE.UTF-8
 ENV HOME /home/docker
@@ -85,8 +87,6 @@ USER docker
 
 RUN cd / \
 && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
-&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > /home/docker/.inputrc \
-&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /root/.inputrc \
 && cd /home/docker \
 && git clone https://github.com/psychopy/psychopy.git
