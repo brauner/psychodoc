@@ -62,6 +62,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    python-parallel \
    python-serial \
    python-sphinx \
+   python-tk \
 && echo 'root:test' | chpasswd \
 && useradd -u 1000 -m docker \
 && echo 'docker:test' | chpasswd \
@@ -82,6 +83,6 @@ WORKDIR /home/docker
 USER docker
 
 RUN cd /home/docker \
-&& printf '\nexport PYTHONPATH=/home/docker/psychopy\n' >> /home/docker/.bashrc \
+&& printf '\nexport PYTHONPATH=/home/docker/psychopy:$PATH\n' >> /home/docker/.profile \
 && cd /home/docker \
 && git clone https://github.com/psychopy/psychopy.git
