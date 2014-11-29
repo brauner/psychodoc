@@ -3,16 +3,18 @@ FROM debian:stable
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 RUN export DEBIAN_FRONTEND=noninteractive \
-&& printf '\npath-exclude=/usr/share/locale/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/locale/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/locale/locale.alias' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-exclude=/usr/share/man/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/man/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/man/man[1-9]/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\ndeb http://neurodebian.g-node.org data main contrib non-free' > /etc/apt/sources.list.d/neurodebian.sources.list \
-&& printf '\ndeb-src http://neurodebian.g-node.org data main contrib non-free' >> /etc/apt/sources.list.d/neurodebian.sources.list \
-&& printf '\ndeb http://neurodebian.g-node.org wheezy main contrib non-free' >> /etc/apt/sources.list.d/neurodebian.sources.list \
-&& printf '\ndeb-src http://neurodebian.g-node.org wheezy main contrib non-free\n' >> /etc/apt/sources.list.d/neurodebian.sources.list \
+&& cd /etc/dpkg/dpkg.cfg.d \
+&& printf '\npath-exclude=/usr/share/locale/*' >> excludes \
+&& printf '\npath-include=/usr/share/locale/en*' >> excludes \
+&& printf '\npath-include=/usr/share/locale/locale.alias' >> excludes \
+&& printf '\npath-exclude=/usr/share/man/*' >> excludes \
+&& printf '\npath-include=/usr/share/man/en*' >> excludes \
+&& printf '\npath-include=/usr/share/man/man[1-9]/*' >> excludes \
+&& cd /etc/apt/sources.list.d \
+&& printf '\ndeb http://neurodebian.g-node.org data main contrib non-free' > neurodebian.sources.list \
+&& printf '\ndeb-src http://neurodebian.g-node.org data main contrib non-free' >> neurodebian.sources.list \
+&& printf '\ndeb http://neurodebian.g-node.org wheezy main contrib non-free' >> neurodebian.sources.list \
+&& printf '\ndeb-src http://neurodebian.g-node.org wheezy main contrib non-free\n' >> neurodebian.sources.list \
 && apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 2649A5A9 \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
@@ -76,7 +78,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 # && groupmod -g 92 audio \
 && usermod -a -G audio docker \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+&& cd /var/lib/apt/lists/ \
+&& rm -rf *
 
 ENV HOME /home/docker
 ENV PYTHONPATH /home/docker/psychopy
