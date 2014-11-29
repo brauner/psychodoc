@@ -32,6 +32,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    git \
    locales \
    less \
+   make \
    mupdf \
    sudo \
    wget \
@@ -56,6 +57,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    jackd2 \
    libavbin-dev \
    libavbin0 \
+   libusb-1.0-0 \
+   libusb-1.0-0-dev \
    python \
    python-setuptools \
    python-numpy \
@@ -102,6 +105,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && git clone https://github.com/psychopy/psychopy.git \
 && cd psychopy \
 && python setup.py install \
+&& git clone git://github.com/labjack/exodriver.git \
+&& cd exodriver \
+&& ./install.sh \
 && git clone https://github.com/labjack/LabJackPython.git \
 && cd LabJackPython \
 && python setup.py install \
