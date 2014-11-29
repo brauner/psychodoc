@@ -46,6 +46,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    alsa-oss \
    flac \
 # Psychopy deps
+   libavbin-dev \
+   libavbin0 \
    python \
    python-setuptools \
    python-numpy \
@@ -63,6 +65,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    python-optcomplete \
    python-pypsignifit \
    python-parallel \
+   python-pp \
+   python-pytest \
    python-serial \
    python-sphinx \
    python-tk \
