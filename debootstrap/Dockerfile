@@ -46,6 +46,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    alsa-oss \
    flac \
 # Psychopy deps
+   iceweasel \
    libavbin-dev \
    libavbin0 \
    python \
@@ -70,6 +71,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    python-serial \
    python-sphinx \
    python-tk \
+   xdg-utils \
 && echo 'root:test' | chpasswd \
 && useradd -u 1000 -m docker \
 && echo 'docker:test' | chpasswd \
