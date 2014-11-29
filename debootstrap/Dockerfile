@@ -3,6 +3,11 @@ FROM brauner/debian:stable
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 RUN export DEBIAN_FRONTEND=noninteractive \
+&& export DEBCONF_NONINTERACTIVE_SEEN=true \
+&& export DEBCONF_DB_OVERRIDE=File{/root/dat} \
+&& cd /root \
+&& printf '\nName: jackd/tweak_rt_limits\nTemplate: jackd/tweak_rt_limits\nValue: true\nOwners: jackd2\n' > dat \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
 && cd /etc/dpkg/dpkg.cfg.d \
 && printf '\npath-exclude=/usr/share/locale/*' >> excludes \
 && printf '\npath-include=/usr/share/locale/en*' >> excludes \
@@ -47,6 +52,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    flac \
 # Psychopy deps
    iceweasel \
+   jackd \
+   jackd2 \
    libavbin-dev \
    libavbin0 \
    python \
@@ -88,6 +95,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && cd /root \
 # && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
+&& rm -f dat \
 && cd /home/docker \
 # && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
@@ -104,4 +112,3 @@ ENV HOME /home/docker
 ENV PYTHONPATH /home/docker/psychopy
 WORKDIR /home/docker
 USER docker
-
