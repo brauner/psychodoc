@@ -78,7 +78,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 # && groupmod -g 92 audio \
 && usermod -a -G audio docker \
 && apt-get clean \
-&& cd /var/lib/apt/lists/ \
+&& cd /var/lib/apt/lists \
 && rm -rf *
 
 ENV HOME /home/docker

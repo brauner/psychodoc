@@ -83,7 +83,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 # && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
 && apt-get clean \
-&& cd /var/lib/apt/lists/ \
+&& cd /var/lib/apt/lists \
 && rm -rf *
 
 ENV LANG en_IE.UTF-8
