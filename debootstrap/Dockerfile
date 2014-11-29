@@ -100,8 +100,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 # && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
 && git clone https://github.com/psychopy/psychopy.git \
+&& cd psychopy \
+&& python setup.py install \
 && git clone https://github.com/labjack/LabJackPython.git \
-&& cd /LabJackPython \
+&& cd LabJackPython \
 && python setup.py install \
 && apt-get clean \
 && cd /var/lib/apt/lists \
@@ -109,6 +111,5 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 
 ENV LANG en_IE.UTF-8
 ENV HOME /home/docker
-ENV PYTHONPATH /home/docker/psychopy
 WORKDIR /home/docker
 USER docker
