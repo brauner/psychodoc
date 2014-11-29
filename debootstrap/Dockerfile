@@ -87,6 +87,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    python-sphinx \
    python-tk \
    xdg-utils \
+&& dpkg-reconfigure -p high jackd \
 && echo 'root:test' | chpasswd \
 && useradd -u 1000 -m docker \
 && echo 'docker:test' | chpasswd \
