@@ -74,21 +74,22 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && usermod -a -G video docker \
 && groupmod -g 92 audio \
 && usermod -a -G audio docker \
-&& printf '\nen_IE.UTF-8 UTF-8\n' >> /etc/locale.gen \
+&& cd /etc \
+&& printf '\nen_IE.UTF-8 UTF-8\n' >> locale.gen \
 && locale-gen \
-&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
-&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /root/.inputrc \
+&& cd /root \
+# && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
 ENV LANG en_IE.UTF-8
 ENV HOME /home/docker
+ENV PYTHONPATH /home/docker/psychopy
 WORKDIR /home/docker
 USER docker
 
 RUN cd /home/docker \
-&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
-&& printf '\nexport PYTHONPATH=/home/docker/psychopy:$PATH\n' >> /home/docker/.profile \
-&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /home/docker/.inputrc \
-&& cd /home/docker \
+# && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
 && git clone https://github.com/psychopy/psychopy.git
