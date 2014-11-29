@@ -79,10 +79,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && rm -rf /var/lib/apt/lists/*
 
 ENV HOME /home/docker
+ENV PYTHONPATH /home/docker/psychopy
 WORKDIR /home/docker
 USER docker
 
 RUN cd /home/docker \
-&& printf '\nexport PYTHONPATH=/home/docker/psychopy:$PATH\n' >> /home/docker/.profile \
-&& cd /home/docker \
 && git clone https://github.com/psychopy/psychopy.git
