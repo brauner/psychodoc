@@ -57,6 +57,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    alsa-oss \
    flac \
 # Psychopy deps
+   dbus \
+   dbus-x11 \
    iceweasel \
    jackd \
    jackd2 \
@@ -87,7 +89,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    python-sphinx \
    python-tk \
    xdg-utils \
-&& dpkg-reconfigure -p high jackd \
+&& dpkg-reconfigure -p high jackd2 \
 && echo 'root:test' | chpasswd \
 && useradd -u 1000 -m docker \
 && echo 'docker:test' | chpasswd \
