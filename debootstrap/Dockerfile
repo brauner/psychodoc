@@ -28,12 +28,17 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    alsa-utils \
    alsa-oss \
    bash-completion \
+   bzip2 \
    ca-certificates \
+   gcc \
+   g++ \
+   gfortran \
    git \
    locales \
    less \
    make \
    mupdf \
+   patch \
    sudo \
    wget \
    zip \
